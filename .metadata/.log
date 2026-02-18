@@ -1,0 +1,51 @@
+!SESSION 2026-02-03 18:34:36.515 -----------------------------------------------
+eclipse.buildId=Version 1.18.1
+java.version=21.0.3
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_IN
+Command-line arguments:  -os win32 -ws win32 -arch x86_64
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 4 4 2026-02-03 18:35:13.557
+!MESSAGE CubeMX plugin appears to be active, Log4j initialization might be too late.
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 1 1 2026-02-03 18:35:13.560
+!MESSAGE Log4j2 initialized with config file D:\MINNU\GITHUB\STM32_SELF_LEARNING\.metadata\.log4j2.xml
+
+!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2026-02-03 18:35:18.090
+!MESSAGE Started RMI Server, listening on port 41337
+
+!ENTRY org.eclipse.cdt.core 1 0 2026-02-03 18:39:03.289
+!MESSAGE Indexed 'LED_Blink_First_STM' (3 sources, 53 headers) in 1.95 sec: 1,954 declarations; 2,863 references; 1 unresolved inclusions; 1 syntax errors; 2 unresolved names (0.042%)
+!SESSION 2026-02-17 15:01:00.924 -----------------------------------------------
+eclipse.buildId=Version 1.18.1
+java.version=21.0.3
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_IN
+Command-line arguments:  -os win32 -ws win32 -arch x86_64
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 4 4 2026-02-17 15:01:13.697
+!MESSAGE CubeMX plugin appears to be active, Log4j initialization might be too late.
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 1 1 2026-02-17 15:01:13.733
+!MESSAGE Log4j2 initialized with config file D:\MINNU\GITHUB\STM32_SELF_LEARNING\.metadata\.log4j2.xml
+
+!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2026-02-17 15:01:23.982
+!MESSAGE Started RMI Server, listening on port 41337
+
+!ENTRY org.eclipse.cdt.core 1 0 2026-02-17 15:03:02.516
+!MESSAGE Indexed 'GPIO_SEC_STM' (3 sources, 53 headers) in 1.28 sec: 1,954 declarations; 2,863 references; 0 unresolved inclusions; 2 syntax errors; 2 unresolved names (0.042%)
+
+!ENTRY org.eclipse.cdt.core 1 0 2026-02-18 20:18:09.148
+!MESSAGE Indexed 'GPIO_THIRD_STM2' (3 sources, 62 headers) in 0.582 sec: 3,272 declarations; 5,422 references; 0 unresolved inclusions; 1 syntax errors; 2 unresolved names (0.023%)
+
+!ENTRY org.eclipse.cdt.core 1 0 2026-02-18 20:26:12.756
+!MESSAGE Indexed '1_LED_Blink_First_STM' (3 sources, 53 headers) in 0.208 sec: 1,955 declarations; 2,891 references; 0 unresolved inclusions; 1 syntax errors; 2 unresolved names (0.041%)
+
+!ENTRY org.eclipse.cdt.core 1 0 2026-02-18 20:26:31.377
+!MESSAGE Indexed '2_GPIO_SEC_STM2' (0 sources, 0 headers) in 0 sec: 0 declarations; 0 references; 0 unresolved inclusions; 0 syntax errors; 0 unresolved names (0%)
+
+!ENTRY org.eclipse.cdt.core 1 0 2026-02-18 20:26:46.605
+!MESSAGE Indexed '3_GPIO_THIRD_STM' (0 sources, 0 headers) in 0 sec: 0 declarations; 0 references; 0 unresolved inclusions; 0 syntax errors; 0 unresolved names (0%)
+
+!ENTRY org.eclipse.cdt.core 1 0 2026-02-18 20:34:22.089
+!MESSAGE Indexed '4_GPIO_PUSH_BUTTON_LED' (4 sources, 62 headers) in 0.435 sec: 3,277 declarations; 5,467 references; 0 unresolved inclusions; 1 syntax errors; 2 unresolved names (0.023%)
