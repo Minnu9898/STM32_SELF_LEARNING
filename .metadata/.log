@@ -49,3 +49,9 @@ Command-line arguments:  -os win32 -ws win32 -arch x86_64
 
 !ENTRY org.eclipse.cdt.core 1 0 2026-02-18 20:34:22.089
 !MESSAGE Indexed '4_GPIO_PUSH_BUTTON_LED' (4 sources, 62 headers) in 0.435 sec: 3,277 declarations; 5,467 references; 0 unresolved inclusions; 1 syntax errors; 2 unresolved names (0.023%)
+
+!ENTRY org.eclipse.cdt.core 1 0 2026-02-22 21:18:31.295
+!MESSAGE Indexed '5_UART' (3 sources, 60 headers) in 1.39 sec: 2,855 declarations; 3,874 references; 4 unresolved inclusions; 30 syntax errors; 707 unresolved names (9.5%)
+
+!ENTRY org.eclipse.cdt.core 1 0 2026-02-22 21:20:20.208
+!MESSAGE Indexed '5_UART_TX_Driver' (0 sources, 0 headers) in 0 sec: 0 declarations; 0 references; 0 unresolved inclusions; 0 syntax errors; 0 unresolved names (0%)

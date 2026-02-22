@@ -33,34 +33,34 @@ $(wildcard ../makefile.init) \
 $(wildcard ../makefile.targets) \
 
 
-BUILD_ARTIFACT_NAME := GPIO_THIRD_STM2
+BUILD_ARTIFACT_NAME := 2_GPIO_SEC_STM2
 BUILD_ARTIFACT_EXTENSION := elf
 BUILD_ARTIFACT_PREFIX :=
 BUILD_ARTIFACT := $(BUILD_ARTIFACT_PREFIX)$(BUILD_ARTIFACT_NAME)$(if $(BUILD_ARTIFACT_EXTENSION),.$(BUILD_ARTIFACT_EXTENSION),)
 
 # Add inputs and outputs from these tool invocations to the build variables 
 EXECUTABLES += \
-GPIO_THIRD_STM2.elf \
+2_GPIO_SEC_STM2.elf \
 
 MAP_FILES += \
-GPIO_THIRD_STM2.map \
+2_GPIO_SEC_STM2.map \
 
 SIZE_OUTPUT += \
 default.size.stdout \
 
 OBJDUMP_LIST += \
-GPIO_THIRD_STM2.list \
+2_GPIO_SEC_STM2.list \
 
 
 # All Target
 all: main-build
 
 # Main-build Target
-main-build: GPIO_THIRD_STM2.elf secondary-outputs
+main-build: 2_GPIO_SEC_STM2.elf secondary-outputs
 
 # Tool invocations
-GPIO_THIRD_STM2.elf GPIO_THIRD_STM2.map: $(OBJS) $(USER_OBJS) D:\MINNU\GITHUB\STM32_SELF_LEARNING\GPIO_THIRD_STM2\STM32F446RETX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "GPIO_THIRD_STM2.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"D:\MINNU\GITHUB\STM32_SELF_LEARNING\GPIO_THIRD_STM2\STM32F446RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="GPIO_THIRD_STM2.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+2_GPIO_SEC_STM2.elf 2_GPIO_SEC_STM2.map: $(OBJS) $(USER_OBJS) D:\MINNU\GITHUB\STM32_SELF_LEARNING\2_GPIO_SEC_STM2\STM32F446RETX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "2_GPIO_SEC_STM2.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"D:\MINNU\GITHUB\STM32_SELF_LEARNING\2_GPIO_SEC_STM2\STM32F446RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="2_GPIO_SEC_STM2.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 
@@ -69,14 +69,14 @@ default.size.stdout: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
 	@echo 'Finished building: $@'
 	@echo ' '
 
-GPIO_THIRD_STM2.list: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-objdump -h -S $(EXECUTABLES) > "GPIO_THIRD_STM2.list"
+2_GPIO_SEC_STM2.list: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-objdump -h -S $(EXECUTABLES) > "2_GPIO_SEC_STM2.list"
 	@echo 'Finished building: $@'
 	@echo ' '
 
 # Other Targets
 clean:
-	-$(RM) GPIO_THIRD_STM2.elf GPIO_THIRD_STM2.list GPIO_THIRD_STM2.map default.size.stdout
+	-$(RM) 2_GPIO_SEC_STM2.elf 2_GPIO_SEC_STM2.list 2_GPIO_SEC_STM2.map default.size.stdout
 	-@echo ' '
 
 secondary-outputs: $(SIZE_OUTPUT) $(OBJDUMP_LIST)
