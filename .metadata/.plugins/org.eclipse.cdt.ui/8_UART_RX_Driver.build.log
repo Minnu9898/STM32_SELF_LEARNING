@@ -1,0 +1,10 @@
+10:42:39 **** Build of configuration Debug for project 8_UART_RX_Driver ****
+make -j16 all 
+arm-none-eabi-size  8_UART_RX_Driver.elf 
+   text	   data	    bss	    dec	    hex	filename
+   1152	      0	   1568	   2720	    aa0	8_UART_RX_Driver.elf
+Finished building: default.size.stdout
+ 
+
+10:42:40 Build Finished. 0 errors, 0 warnings. (took 1s.20ms)
+

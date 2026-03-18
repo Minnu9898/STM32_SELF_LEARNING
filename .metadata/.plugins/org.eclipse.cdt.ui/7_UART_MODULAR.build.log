@@ -1,0 +1,20 @@
+22:10:03 **** Build of configuration Debug for project 7_UART_MODULAR ****
+make -j16 all 
+arm-none-eabi-gcc "../Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F4 -DSTM32F446RETx -DNUCLEO_F446RE -DSTM32F446xx -c -I../Inc -I"D:/MINNU/GITHUB/STM32_SELF_LEARNING/Chip_Headers/CMSIS/Device/ST/STM32F4xx/Include" -I"D:/MINNU/GITHUB/STM32_SELF_LEARNING/Chip_Headers/CMSIS/Include" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Src/main.d" -MT"Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Src/main.o"
+arm-none-eabi-gcc "../Src/syscalls.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F4 -DSTM32F446RETx -DNUCLEO_F446RE -DSTM32F446xx -c -I../Inc -I"D:/MINNU/GITHUB/STM32_SELF_LEARNING/Chip_Headers/CMSIS/Device/ST/STM32F4xx/Include" -I"D:/MINNU/GITHUB/STM32_SELF_LEARNING/Chip_Headers/CMSIS/Include" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Src/syscalls.d" -MT"Src/syscalls.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Src/syscalls.o"
+arm-none-eabi-gcc "../Src/sysmem.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F4 -DSTM32F446RETx -DNUCLEO_F446RE -DSTM32F446xx -c -I../Inc -I"D:/MINNU/GITHUB/STM32_SELF_LEARNING/Chip_Headers/CMSIS/Device/ST/STM32F4xx/Include" -I"D:/MINNU/GITHUB/STM32_SELF_LEARNING/Chip_Headers/CMSIS/Include" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Src/sysmem.d" -MT"Src/sysmem.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Src/sysmem.o"
+arm-none-eabi-gcc "../Src/uart.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F4 -DSTM32F446RETx -DNUCLEO_F446RE -DSTM32F446xx -c -I../Inc -I"D:/MINNU/GITHUB/STM32_SELF_LEARNING/Chip_Headers/CMSIS/Device/ST/STM32F4xx/Include" -I"D:/MINNU/GITHUB/STM32_SELF_LEARNING/Chip_Headers/CMSIS/Include" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Src/uart.d" -MT"Src/uart.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Src/uart.o"
+arm-none-eabi-gcc -o "7_UART_MODULAR.elf" @"objects.list"   -mcpu=cortex-m4 -T"D:\MINNU\GITHUB\STM32_SELF_LEARNING\7_UART_MODULAR\STM32F446RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="7_UART_MODULAR.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: 7_UART_MODULAR.elf
+ 
+arm-none-eabi-size  7_UART_MODULAR.elf 
+arm-none-eabi-objdump -h -S 7_UART_MODULAR.elf  > "7_UART_MODULAR.list"
+   text	   data	    bss	    dec	    hex	filename
+   3696	     92	   1900	   5688	   1638	7_UART_MODULAR.elf
+Finished building: default.size.stdout
+ 
+Finished building: 7_UART_MODULAR.list
+ 
+
+22:10:04 Build Finished. 0 errors, 0 warnings. (took 767ms)
+

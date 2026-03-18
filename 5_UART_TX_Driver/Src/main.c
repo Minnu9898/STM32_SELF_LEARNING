@@ -35,20 +35,26 @@
 #define GPIOAEN  		(1U<<0)    //IN AHB1EN register GPIOA is in Bit 0
 #define UART2EN  		(1U<<17)   //IN APB1EN register UART2 is in Bit 17
 #define CR1_TE			(1U<<3)	   //transfer direction
-#define CR1_UE			(1U<<13)
+#define CR1_UE			(1U<<13)   //Uart Enable
+
+
+#define SR_TXE			(1<<7)	//TXE register
+#define SR_TC		    (1<<6)	//TC register
 
 void UART2_tx_init (void);
+void uart2_write(int ch);
 static void uart_set_baudrate(USART_TypeDef *USARTx,uint32_t PeriphClk, uint32_t BaudRate );
 static uint16_t compute_uart_bd (uint32_t PeriphClk, uint32_t BaudRate);
 
 int main(void)
 {
+	UART2_tx_init();
 
 
 
 	while (1)
 	{
-
+		uart2_write('Y');
 	}
 }
 
@@ -82,6 +88,18 @@ void UART2_tx_init (void)
 
 }
 
+void uart2_write(int ch)
+{
+	/*Make sure Data Register is empty- TXE=1/0
+	 * Write to DR
+	 */
+	while(!(USART2->SR & SR_TXE))
+	{
+
+	}
+	USART2->DR=(ch & 0xFF);
+
+}
 static void uart_set_baudrate(USART_TypeDef *USARTx,uint32_t PeriphClk, uint32_t BaudRate )
 {
 	USARTx->BRR = compute_uart_bd(PeriphClk, BaudRate);
