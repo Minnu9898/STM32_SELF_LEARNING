@@ -1,0 +1,1191 @@
+1. Write a C program that takes an integer from the user and determines whether the number is even or odd.
+Description: The program should prompt the user to enter a whole number. It must then check if the number is perfectly divisible by 2. If it is, the program should display that the number is even; otherwise, it should display that the number is odd. The program should handle both positive and negative integers. Pre-requisites: Conditional Statements, Operators.
+
+#include <stdio.h>
+
+void even_or_odd(int a)
+{
+	if (a%2==0)
+	{
+        printf("Entered number is Even\n");
+	}
+	else
+	{
+	     printf("Entered number is Odd");
+	}
+}
+int main()
+{
+	int n;
+	printf("Hello ! \n Enter a number: \n ");
+	scanf("%d",&n);
+	even_or_odd(n);
+
+	return 0;
+}
+
+2. Write a C program that asks the user to enter a number and determines whether that number is prime or not.
+Description: A prime number is a natural number greater than 1 that cannot be formed by multiplying two smaller natural numbers. In simpler terms, it is a number that is only divisible by 1 and itself. Your program should take an integer as input and check if it has any divisors other than 1 and the number itself. If the user enters a number like 2, 3, or 5, the program should identify it as prime. However, if the user enters a number less than 2, or a number like 4 or 6 that can be divided by other values, the program should state it is not prime. You should use a simple loop to test for these divisors and a conditional statement to print the final result. Pre-requisites: Loops, Conditional Statements, Operators
+
+
+
+#include <stdio.h>
+
+void prime(int a)
+{
+	if (a<2)
+	{
+        printf("Not a Prime Number\n");
+	}
+	else 
+	{
+	     int i;
+	     for (i=2;i<=a;i++)
+	     {
+	         if (a%i==0)
+	         {
+	            printf("Entered number is not a prime \n"); 
+	            break;
+	         }
+	         else
+	         {
+	             printf("Entered number is  a prime number");
+	             break;
+	         }
+	             
+	     }
+	}
+}
+int main()
+{
+	int n;
+	printf("Hello ! \n Enter a number: \n ");
+	scanf("%d",&n);
+	prime(n);
+
+	return 0;
+}
+
+
+3. Write a C program that takes a positive integer from the user and calculates its factorial.
+Description: The program should prompt the user to enter a single whole number. It must then calculate the factorial of that number, which is the product of all positive integers from 1 up to the number entered. The final result should be displayed clearly on the screen. The program should also account for the fact that the factorial of 0 is Pre-requisites: Operators, Data Types, Loops.
+
+
+
+#include <stdio.h>
+
+void factorial(int a)
+{
+    int i,fact=1;
+	if (a<0)
+	{
+        printf(" Negative num not Valid");
+	}
+	else 
+	{
+	     
+	     for (i=1;i<=a;i++)
+	     {
+	         fact=fact*i;
+	     }
+	}
+	printf("Factorial of number %d is %d", a,fact);
+}
+int main()
+{
+	int n;
+	printf("Hello ! \n Enter a number: \n ");
+	scanf("%d",&n);
+	factorial(n);
+
+	return 0;
+}
+
+
+4. Write a C program to generate the Fibonacci series up to a given number of terms.
+Description: The program should prompt the user to enter the number of terms (n). It should then generate the Fibonacci sequence, where each number is the sum of the two preceding ones, starting from 0 and 1. The program must display the sequence up to the specified number of terms. Pre-requisites: Loops, Variables, Basic Arithmetic Operations
+
+
+
+#include <stdio.h>
+
+void Fibonacci(int a)
+{
+   int first=0, second=1, third;
+   for (int i=1;i<=a;i++)
+   {
+       printf("%d \t",first);
+       third=first + second;
+       first=second;
+       second=third;
+   }
+
+   
+   
+}
+int main()
+{
+	int n;
+	printf("Hello ! \n Enter a number: \n ");
+	scanf("%d",&n);
+	Fibonacci(n);
+
+	return 0;
+}
+
+
+5. Write a C program that uses a function to check whether a given number is a Perfect Number.
+
+Description: The program should prompt the user to enter a positive integer. A separate function must be written that computes the sum of all proper divisors of the number (excluding the number itself) and returns whether the sum equals the original number. The main function should display whether the number is perfect or not. (Example: 6 = 1+2+3, 28 = 1+2+4+7+14) Pre-requisites: Functions, Loops, Return Values.
+
+
+
+#include <stdio.h>
+
+void Perfect (int a)
+{
+    int sum=0;
+   if(a<0)
+   {
+       printf("Enter a positive number");
+   }
+   else
+   {
+       for(int i=1;i<=a/2;i++)
+       {
+          if(a%i==0) 
+          {
+              sum+=i;
+          }
+       }
+       
+   }
+   if(sum==a)
+   {
+       printf("Enterd num is a PERFECT num");
+   }
+   else
+   {
+       printf("Enterd num is a Not A PERFECT num");
+   }
+   
+   
+}
+int main()
+{
+	int n;
+	printf("Hello ! \n Enter a number: \n ");
+	scanf("%d",&n);
+	Perfect(n);
+
+	return 0;
+}
+
+
+6. Write a C program that uses a recursive function to find the GCD of two numbers using the Euclidean algorithm.
+
+Description: The program should prompt the user to enter two positive integers. A recursive function must be written that repeatedly applies the Euclidean method replacing the larger number with the remainder of dividing the two until the remainder is zero. The GCD should be returned to the main function and displayed on the screen. Pre-requisites: Functions, Recursion, Modulus Operator.
+
+
+
+#include <stdio.h>
+
+int GCD (int num1,int num2)
+{
+   
+   if (num2==0)
+    {
+        return num1;
+    }
+    else
+    {
+        return GCD(num2,num1%num2);
+    }
+}
+int main()
+{
+	int n1,n2,Output;
+	printf("Hello ! \n Enter 2 positive number: \n ");
+	scanf("%d%d",&n1,&n2);
+	if (n1 <= 0 || n2 <= 0)
+    {
+        printf("Please enter positive integers only.\n");
+    }
+	Output= GCD(n1,n2);
+    printf("GCD of %d,%d is %d",n1,n2,Output);
+
+}
+
+7. Write a C program that uses a function to count the frequency of each digit (0–9) in a given integer.
+Description: The program should prompt the user to enter an integer. A separate function must be written that takes the number, extracts each digit using a loop, and updates a frequency array accordingly. The function should not return a single value but instead update the array directly. The main function should then print how many times each digit appears in the number. Pre-requisites: Functions, Arrays, Loops, Pass by Reference (Pointers).
+
+
+
+#include <stdio.h>
+
+int Freq (int a,int f[])
+{
+    int digit;
+    while(a>0)
+    {
+        digit=a%10; //last digit (if I enter 115- 0 2 0 0 1 0 0 0 0 0)
+        f[digit]++;
+        a=a/10;
+    }
+    for (int i = 0; i < 10; i++)
+    {
+        printf("Digit %d: %d times\n", i, f[i]);
+    }
+
+}
+int main()
+{
+	int n,freqarr[10]={0};
+	printf("Hello ! \n Enter a positive number: \n ");
+	scanf("%d",&n);
+
+	Freq(n,freqarr);
+    
+
+}
+
+8. Write a C program that uses functions to convert a decimal number to any base between 2 and 16.
+Description: The program should prompt the user to enter a decimal number and a target base. A separate function must be written that performs the repeated division method, stores each remainder, and builds the result in the correct order. For bases above 9, remainders 10–15 should be represented as letters A–F. The converted value should be displayed from the main function. Pre-requisites: Functions, Loops, Arrays, Character Handling.
+
+
+
+
+#include <stdio.h>
+
+void Conversion (int a,int base)
+{
+     char result[50];
+    int i=0, r;
+    while (a > 0)
+    {
+        r = a % base;
+
+        if (r < 10)
+            result[i] = r + '0';
+        else
+            result[i] = r - 10 + 'A';
+
+        a = a / base;
+        i++;
+    }
+     // Print in reverse order
+    printf("Converted value: ");
+    for (int j = i - 1; j >= 0; j--)
+    {
+        printf("%c", result[j]);
+    }
+    printf("\n");
+}
+int main()
+{
+	int n,base;
+	printf("Hello ! \n Enter a positive number: \n ");
+	scanf("%d",&n);
+	printf("Enter target base (2 and 16): ");
+	scanf("%d", &base);
+
+	Conversion(n,base);
+
+}
+
+9. Write a C program that uses functions to evaluate a simple arithmetic expression given two numbers and an operator.
+Description: The program should prompt the user to enter two floating-point numbers and an arithmetic operator (+, -, *, /). A separate function must be written for each operation (add, subtract, multiply, divide). A selector function should take the operator as a parameter and call the appropriate function, returning the result to main. Division by zero must be handled gracefully inside the divide function. Pre-requisites: Functions, Switch/Conditionals, Float Arithmetic, Error Handling.
+
+
+
+#include <stdio.h>
+
+float add(float a, float b)
+{
+    return a + b;
+}
+
+float subtract(float a, float b)
+{
+    return a - b;
+}
+
+float multiply(float a, float b)
+{
+    return a * b;
+}
+
+float divide(float a, float b)
+{
+    if (b == 0)
+    {
+        printf("Error: Division by zero is not allowed.\n");
+        return 0; // return safe value
+    }
+    return a / b;
+}
+
+// Selector function
+float calculate(float a, float b, char op)
+{
+    switch (op)
+    {
+        case '+': return add(a, b);
+        case '-': return subtract(a, b);
+        case '*': return multiply(a, b);
+        case '/': return divide(a, b);
+        default:
+            printf("Invalid operator!\n");
+            return 0;
+    }
+}
+
+int main()
+
+{
+    float num1, num2, result;
+    char operator;
+
+    printf("Enter first number: ");
+    scanf("%f", &num1);
+
+    printf("Enter an operator (+, -, *, /): ");
+    scanf(" %c", &operator); // space handles newline issue
+
+    printf("Enter second number: ");
+    scanf("%f", &num2);
+
+    result = calculate(num1, num2, operator);
+
+    printf("Result = %.2f\n", result);
+
+    return 0;
+}
+
+10. Write a C program that takes a string of digits from the user and converts it into its equivalent integer value.
+Description:The program should prompt the user to enter a number as a string (for example, 1234). It must then process this string character by character and transform it into an actual integer variable that can be used for mathematical operations. The program should be able to handle positive numbers and display the final integer result on the screen. Pre-requisites: Loops, Strings, Operators.
+
+
+
+#include <stdio.h>
+
+
+
+int main()
+{
+    char str[100];
+    int i = 0, num = 0;
+
+    printf("Enter a number (as string): ");
+    scanf("%s", str);
+
+    // Convert string to integer
+    while (str[i] != '\0')
+    {
+        num = num * 10 + (str[i] - '0');
+        i++;
+    }
+
+    printf("Integer value = %d\n", num);
+
+    return 0;
+}
+
+11. Write a C program that takes an integer from the user and converts it into a string of characters.
+Description:The program should prompt the user to enter a whole number. It must then process this integer and store each of its digits as characters within a character array (string). The resulting string should represent the number exactly as it was entered, including a negative sign if the number is less than zero. Finally, the program should display the resulting string on the screen. Pre-requisites: Strings, Loops, Operators.
+
+
+
+#include <stdio.h>
+
+
+
+int main()
+{
+    int num, temp, i = 0, j;
+    char str[100];
+
+    printf("Enter an integer: ");
+    scanf("%d", &num);
+
+    temp = num;
+
+    // Handle negative numbers
+    if (num < 0)
+    {
+        temp = -num;
+    }
+
+    // Convert digits to characters (in reverse)
+    do
+    {
+        str[i++] = (temp % 10) + '0';
+        temp = temp / 10;
+    } while (temp > 0);
+
+    // Add negative sign if needed
+    if (num < 0)
+    {
+        str[i++] = '-';
+    }
+
+    str[i] = '\0';
+
+    // Reverse the string
+    for (j = 0; j < i / 2; j++)
+    {
+        char t = str[j];
+        str[j] = str[i - j - 1];
+        str[i - j - 1] = t;
+    }
+
+    printf("String value = %s\n", str);
+
+    return 0;
+}
+
+12. Write a C program that takes a string from the user and checks whether it is a palindrome.
+Description: The program should prompt the user to enter a string. It must determine if the string reads the same forward and backward. The program should then display a message to the user stating whether the input is a palindrome or not. Pre-requisites: Loops, Control Statements, Strings and Operators.
+
+#include <stdio.h>
+#include <string.h>
+
+int main()
+{
+    char str[100];
+    int i, length, isPalindrome = 1;
+
+    printf("Enter a string: ");
+    scanf("%s", str);   
+    length = strlen(str);
+
+    // Compare characters from both ends
+    for (i = 0; i < length / 2; i++)
+    {
+        if (str[i] != str[length - i - 1])
+        {
+            isPalindrome = 0;
+            break;
+        }
+    }
+
+    if (isPalindrome)
+        printf("The string is a Palindrome.\n");
+    else
+        printf("The string is NOT a Palindrome.\n");
+
+    return 0;
+}
+
+13. Write a C program that takes a string from the user and reverses its characters using an iterative approach.
+Description: The program should prompt the user to enter a sequence of characters. It must then swap or move the characters within the string using a loop until the entire string is reversed. The final resulting string should be displayed on the screen. Pre-requisites: Loops, Strings. Operators.
+
+#include <stdio.h>
+#include <string.h>
+
+int main()
+{
+    char str[100];
+    int i, length;
+    char temp;
+
+    printf("Enter a string: ");
+    scanf("%s", str);   // for single word
+
+    length = strlen(str);
+
+    // Reverse using swapping
+    for (i = 0; i < length / 2; i++)
+    {
+        temp = str[i];
+        str[i] = str[length - i - 1];
+        str[length - i - 1] = temp;
+    }
+
+    printf("Reversed string = %s\n", str);
+
+    return 0;
+}
+
+14. Write a C program that takes a string input from the user and determines whether it is a pangram or not.
+Description: The program should prompt the user to enter a sentence or a string of characters. It must then verify if every letter of the alphabet from A to Z appears at least once within the provided text, regardless of whether the letters are uppercase or lowercase. The final output should state if the string is a pangram. Pre-requisites: Loops, Strings, Conditional Statements, ASCII, Operators
+
+#include <stdio.h>
+
+int main()
+{
+    char str[200];
+    int i, index;
+    int alphabet[26] = {0};  // to track A–Z
+
+    printf("Enter a sentence: ");
+    fgets(str, sizeof(str), stdin);
+
+    // Process each character
+    for (i = 0; str[i] != '\0'; i++)
+    {
+        // Convert uppercase to lowercase
+        if (str[i] >= 'A' && str[i] <= 'Z')
+        {
+            index = str[i] - 'A';
+            alphabet[index] = 1;
+        }
+        else if (str[i] >= 'a' && str[i] <= 'z')
+        {
+            index = str[i] - 'a';
+            alphabet[index] = 1;
+        }
+    }
+
+    // Check if all letters are present
+    for (i = 0; i < 26; i++)
+    {
+        if (alphabet[i] == 0)
+        {
+            printf("The string is NOT a pangram.\n");
+            return 0;
+        }
+    }
+
+    printf("The string is a pangram.\n");
+
+    return 0;
+}
+
+15. Write a C program that takes a string from the user and replaces every sequence of multiple consecutive spaces with a single space.
+Description: The program should prompt the user to enter a sentence that may contain several spaces between words. It must then process the string to ensure that any instance where two or more blank spaces appear together is reduced to just one blank space. The final cleaned string should be displayed on the screen. Pre-requisites: Loops, Strings, Conditional Statements, ASCII, Operators
+
+#include <stdio.h>
+
+int main()
+{
+    char str[200], result[200];
+    int i = 0, j = 0;
+
+    printf("Enter a sentence: ");
+    fgets(str, sizeof(str), stdin);
+
+    while (str[i] != '\0')
+    {
+        // Copy non-space characters
+        if (str[i] != ' ')
+        {
+            result[j++] = str[i];
+        }
+        else
+        {
+            // Copy only one space
+            result[j++] = ' ';
+
+            // Skip all extra spaces
+            while (str[i] == ' ')
+            {
+                i++;
+            }
+            continue;
+        }
+        i++;
+    }
+
+    result[j] = '\0';
+
+    printf("Cleaned string:\n%s\n", result);
+
+    return 0;
+}
+
+16. Write a C program that takes a string from the user and converts all uppercase letters into their corresponding lowercase letters.
+Description: The program should prompt the user to enter a sequence of characters. It must then check each character individually. If a character is an uppercase letter, the program should convert it to its lowercase equivalent. If the character is already lowercase or is not a letter at all, the program should leave it exactly as it is. The final modified string should be displayed on the screen. Pre-requisites: Loops, Strings, Conditional Statements, ACII.
+
+#include <stdio.h>
+
+int main()
+{
+    char str[200];
+    int i = 0;
+
+    printf("Enter a string: ");
+    fgets(str, sizeof(str), stdin);
+
+    // Traverse each character
+    while (str[i] != '\0')
+    {
+        // Check if uppercase
+        if (str[i] >= 'A' && str[i] <= 'Z')
+        {
+            str[i] = str[i] + 32;  // convert to lowercase
+        }
+        i++;
+    }
+
+    printf("Modified string:\n%s", str);
+
+    return 0;
+}
+
+
+17. Write a C program that takes a number and toggles a specific number of bits (n) starting from a given position. Description: The program should prompt the user to enter an integer, a starting bit position, and the number of bits to be modified. It must then change the state of those (n) consecutive bits—switching 0s to 1s and 1s to 0s—while keeping all other bits in the number exactly as they were. The final value of the number after the toggle operation should be displayed on the screen. Pre-requisites: Bitwise operators, Loops, Assignment operators.
+
+
+
+#include <stdio.h>
+
+// Function to toggle bits
+int toggleBits(int num, int pos, int n)
+{
+    int mask = 0;
+
+    // Create mask with n 1's starting at position pos
+    for (int i = 0; i < n; i++)
+    {
+        mask |= (1 << (pos + i));
+    }
+
+    // Toggle bits using XOR
+    return num ^ mask;
+}
+
+int main()
+{
+    int num, pos, n, result;
+
+    printf("Enter an integer: ");
+    scanf("%d", &num);
+
+    printf("Enter starting bit position (0-based): ");
+    scanf("%d", &pos);
+
+    printf("Enter number of bits to toggle: ");
+    scanf("%d", &n);
+
+    result = toggleBits(num, pos, n);
+
+    printf("Result after toggling = %d\n", result);
+
+    return 0;
+}
+
+
+18. Write a C program that takes an integer from the user and extracts (n) bits starting from a specific bit position.
+Description: The program should prompt the user to enter a number, a starting position, and the number of bits to be retrieved. It must then isolate that specific sequence of bits from the original value and display the resulting number on the screen. The other bits in the number should not affect the final output. Pre-requisites: Bitwise Operators.
+
+
+#include <stdio.h>
+
+// Function to extract n bits from position pos
+int extractBits(int num, int pos, int n)
+{
+    // Shift right to bring desired bits to LSB
+    num = num >> pos;
+
+    // Create mask with n 1's
+    int mask = (1 << n) - 1;
+
+    // Apply mask
+    return num & mask;
+}
+
+int main()
+{
+    int num, pos, n, result;
+
+    printf("Enter an integer: ");
+    scanf("%d", &num);
+
+    printf("Enter starting bit position (0-based): ");
+    scanf("%d", &pos);
+
+    printf("Enter number of bits to extract: ");
+    scanf("%d", &n);
+
+    result = extractBits(num, pos, n);
+
+    printf("Extracted value = %d\n", result);
+
+    return 0;
+}
+
+19. Write a C program that takes a number and replaces n of its bits, starting from a given position, with another set of n bits from a second number.
+Description: The program should prompt the user to enter two integers, a starting bit position, and the number of bits n to be modified. It must then clear $n$ bits in the first number at the specified position and replace them with the corresponding $n$ bits from the second number. The final resulting value should be displayed on the screen while all other bits in the first number remain unchanged. Pre-requisites: Bitwise Operators
+
+#include <stdio.h>
+
+// Function to replace bits
+int replaceBits(int num1, int num2, int pos, int n)
+{
+    // Step 1: Create mask with n 1's
+    int mask = (1 << n) - 1;
+
+    // Step 2: Extract n bits from num2
+    int bits = num2 & mask;
+
+    // Step 3: Shift extracted bits to correct position
+    bits = bits << pos;
+
+    // Step 4: Clear n bits in num1 at position pos
+    int clearMask = ~(mask << pos);
+    num1 = num1 & clearMask;
+
+    // Step 5: Insert bits into num1
+    return num1 | bits;
+}
+
+int main()
+{
+    int num1, num2, pos, n, result;
+
+    printf("Enter first number: ");
+    scanf("%d", &num1);
+
+    printf("Enter second number: ");
+    scanf("%d", &num2);
+
+    printf("Enter starting position (0-based): ");
+    scanf("%d", &pos);
+
+    printf("Enter number of bits (n): ");
+    scanf("%d", &n);
+
+    result = replaceBits(num1, num2, pos, n);
+
+    printf("Result after replacement = %d\n", result);
+
+    return 0;
+}
+
+20. Write a C program that takes two integers and swaps n bits starting from a given position in both numbers.
+Description: The program should prompt the user to enter two integers, a starting bit position, and the number of bits (n) to be swapped. It must then exchange the n consecutive bits at the specified position between the two numbers — the bits from the first number go into the second, and vice versa — while all remaining bits in both numbers stay exactly as they were. Both final values should be displayed on the screen after the swap. Pre-requisites: Bitwise Operators, Loops, Assignment Operators.
+\
+
+#include <stdio.h>
+
+// Function to swap n bits at position pos
+void swapBits(int *a, int *b, int pos, int n)
+{
+    // Step 1: Create mask of n bits
+    int mask = (1 << n) - 1;
+
+    // Step 2: Extract bits from both numbers
+    int bitsA = (*a >> pos) & mask;
+    int bitsB = (*b >> pos) & mask;
+
+    // Step 3: Find differing bits
+    int xorBits = bitsA ^ bitsB;
+
+    // Step 4: Shift back to position
+    xorBits = xorBits << pos;
+
+    // Step 5: Swap using XOR
+    *a = *a ^ xorBits;
+    *b = *b ^ xorBits;
+}
+
+int main()
+{
+    int num1, num2, pos, n;
+
+    printf("Enter first number: ");
+    scanf("%d", &num1);
+
+    printf("Enter second number: ");
+    scanf("%d", &num2);
+
+    printf("Enter starting position (0-based): ");
+    scanf("%d", &pos);
+
+    printf("Enter number of bits (n): ");
+    scanf("%d", &n);
+
+    swapBits(&num1, &num2, pos, n);
+
+    printf("After swapping:\n");
+    printf("First number = %d\n", num1);
+    printf("Second number = %d\n", num2);
+
+    return 0;
+}
+
+21. Write a C program to remove duplicate elements from a given array.
+Description: The program should prompt the user to enter the size of the array and its elements. It must then identify and remove any duplicate values, ensuring that each element appears only once in the resulting array. The program should finally display the updated array containing only unique elements. Pre-requisites: Arrays, Loops, Conditional Statements
+
+#include <stdio.h>
+
+int main()
+{
+    int arr[100], n, i, j, k;
+
+    printf("Enter number of elements: ");
+    scanf("%d", &n);
+
+    printf("Enter elements:\n");
+    for (i = 0; i < n; i++)
+    {
+        scanf("%d", &arr[i]);
+    }
+
+    // Remove duplicates
+    for (i = 0; i < n; i++)
+    {
+        for (j = i + 1; j < n; )
+        {
+            if (arr[i] == arr[j])
+            {
+                // Shift elements left
+                for (k = j; k < n - 1; k++)
+                {
+                    arr[k] = arr[k + 1];
+                }
+                n--; // reduce size
+            }
+            else
+            {
+                j++;
+            }
+        }
+    }
+
+    // Display unique array
+    printf("Array after removing duplicates:\n");
+    for (i = 0; i < n; i++)
+    {
+        printf("%d ", arr[i]);
+    }
+
+    return 0;
+}
+
+
+22. Write a C program that uses an array to find the second largest and second smallest element in a list of numbers.
+Description: The program should prompt the user to enter the size of the array and its elements. It must then scan through the array and determine both the second largest and second smallest values without sorting the array. The program should handle duplicate values correctly — if all elements are the same, it should display an appropriate message. Both results should be displayed on the screen. Pre-requisites: Arrays, Loops, Conditional Statements.
+
+#include <stdio.h>
+#include <limits.h>
+
+int main()
+{
+    int arr[100], n, i;
+    int min = INT_MAX, secondMin = INT_MAX;
+    int max = INT_MIN, secondMax = INT_MIN;
+
+    printf("Enter number of elements: ");
+    scanf("%d", &n);
+
+    printf("Enter elements:\n");
+    for (i = 0; i < n; i++)
+    {
+        scanf("%d", &arr[i]);
+    }
+
+    // Find min, second min, max, second max
+    for (i = 0; i < n; i++)
+    {
+        // For smallest
+        if (arr[i] < min)
+        {
+            secondMin = min;
+            min = arr[i];
+        }
+        else if (arr[i] > min && arr[i] < secondMin)
+        {
+            secondMin = arr[i];
+        }
+
+        // For largest
+        if (arr[i] > max)
+        {
+            secondMax = max;
+            max = arr[i];
+        }
+        else if (arr[i] < max && arr[i] > secondMax)
+        {
+            secondMax = arr[i];
+        }
+    }
+
+    // Check results
+    if (secondMin == INT_MAX || secondMax == INT_MIN)
+    {
+        printf("No distinct second smallest or second largest element found.\n");
+    }
+    else
+    {
+        printf("Second Smallest = %d\n", secondMin);
+        printf("Second Largest = %d\n", secondMax);
+    }
+
+    return 0;
+}
+
+23. Write a C program that rotates the elements of an array by n positions in a specified direction.
+Description: The program should prompt the user to enter the array elements, the number of positions (n) to rotate, and the direction (left or right). It must then shift the elements accordingly — elements that fall off one end should reappear at the opposite end. The rotation must work for any value of n, including values larger than the array size. The final rotated array should be displayed on the screen. Pre-requisites: Arrays, Loops, Modulus Operator.
+
+#include <stdio.h>
+
+int main()
+{
+    int arr[100], temp[100];
+    int n, size, i;
+    char dir;
+
+    printf("Enter size of array: ");
+    scanf("%d", &size);
+
+    printf("Enter elements:\n");
+    for (i = 0; i < size; i++)
+    {
+        scanf("%d", &arr[i]);
+    }
+
+    printf("Enter number of rotations: ");
+    scanf("%d", &n);
+
+    printf("Enter direction (L for left, R for right): ");
+    scanf(" %c", &dir);
+
+    // Handle n greater than size
+    n = n % size;
+
+    if (dir == 'L' || dir == 'l')
+    {
+        // Left rotation
+        for (i = 0; i < size; i++)
+        {
+            temp[i] = arr[(i + n) % size];
+        }
+    }
+    else if (dir == 'R' || dir == 'r')
+    {
+        // Right rotation
+        for (i = 0; i < size; i++)
+        {
+            temp[i] = arr[(i - n + size) % size];
+        }
+    }
+    else
+    {
+        printf("Invalid direction!\n");
+        return 0;
+    }
+
+    printf("Rotated array:\n");
+    for (i = 0; i < size; i++)
+    {
+        printf("%d ", temp[i]);
+    }
+
+    return 0;
+}
+
+24. Write a C program that merges two sorted arrays into a single sorted array without using any sorting function.
+Description: The program should prompt the user to enter the sizes and elements of two arrays, each already sorted in ascending order. It must then merge them into a third array by comparing elements from both arrays one by one and placing the smaller element first, continuing until all elements are placed. The final merged sorted array should be displayed on the screen. Pre-requisites: Arrays, Loops, Multiple Array Handling.
+
+#include <stdio.h>
+
+int main()
+{
+    int a[100], b[100], c[200];
+    int n1, n2, i, j, k;
+
+    printf("Enter size of first array: ");
+    scanf("%d", &n1);
+
+    printf("Enter elements of first array (sorted):\n");
+    for (i = 0; i < n1; i++)
+    {
+        scanf("%d", &a[i]);
+    }
+
+    printf("Enter size of second array: ");
+    scanf("%d", &n2);
+
+    printf("Enter elements of second array (sorted):\n");
+    for (i = 0; i < n2; i++)
+    {
+        scanf("%d", &b[i]);
+    }
+
+    i = 0; // index for a
+    j = 0; // index for b
+    k = 0; // index for c
+
+    // Merge arrays
+    while (i < n1 && j < n2)
+    {
+        if (a[i] <= b[j])
+        {
+            c[k++] = a[i++];
+        }
+        else
+        {
+            c[k++] = b[j++];
+        }
+    }
+
+    // Copy remaining elements
+    while (i < n1)
+    {
+        c[k++] = a[i++];
+    }
+
+    while (j < n2)
+    {
+        c[k++] = b[j++];
+    }
+
+    // Display merged array
+    printf("Merged sorted array:\n");
+    for (i = 0; i < k; i++)
+    {
+        printf("%d ", c[i]);
+    }
+
+    return 0;
+}
+
+25. Write a C program that finds all pairs of elements in an array whose sum equals a given target value.
+Description: The program should prompt the user to enter the size of the array, its elements, and a target sum. It must then examine all possible pairs of elements in the array and identify every pair whose sum matches the target. Each valid pair should be printed on the screen. If no such pair exists, an appropriate message should be displayed. The same element should not be paired with itself. Pre-requisites: Arrays, Nested Loops, Conditional Statements.
+
+#include <stdio.h>
+
+int main()
+{
+    int arr[100], n, target;
+    int i, j, found = 0;
+
+    printf("Enter number of elements: ");
+    scanf("%d", &n);
+
+    printf("Enter elements:\n");
+    for (i = 0; i < n; i++)
+    {
+        scanf("%d", &arr[i]);
+    }
+
+    printf("Enter target sum: ");
+    scanf("%d", &target);
+
+    printf("Pairs with sum %d:\n", target);
+
+    // Check all pairs
+    for (i = 0; i < n; i++)
+    {
+        for (j = i + 1; j < n; j++)
+        {
+            if (arr[i] + arr[j] == target)
+            {
+                printf("(%d, %d)\n", arr[i], arr[j]);
+                found = 1;
+            }
+        }
+    }
+
+    if (!found)
+    {
+        printf("No pairs found.\n");
+    }
+
+    return 0;
+}
+
+26. Write a C program that rearranges an array such that all negative numbers appear before all positive numbers while preserving the relative order of both groups.
+Description: The program should prompt the user to enter the size of the array and its elements (a mix of positive and negative integers). It must then rearrange the elements so that all negative numbers come first, followed by all positive numbers, without changing the order in which the negatives appear among themselves or the positives among themselves. Zero can be treated as positive. The rearranged array should be displayed on the screen. Pre-requisites: Arrays, Loops, Temporary Storage, Order Preservation Logic.
+
+#include <stdio.h>
+
+int main()
+{
+    int arr[100], temp[100];
+    int n, i, j = 0;
+
+    printf("Enter number of elements: ");
+    scanf("%d", &n);
+
+    printf("Enter elements:\n");
+    for (i = 0; i < n; i++)
+    {
+        scanf("%d", &arr[i]);
+    }
+
+    // Step 1: Add all negative numbers (preserve order)
+    for (i = 0; i < n; i++)
+    {
+        if (arr[i] < 0)
+        {
+            temp[j++] = arr[i];
+        }
+    }
+
+    // Step 2: Add all non-negative numbers (0 treated as positive)
+    for (i = 0; i < n; i++)
+    {
+        if (arr[i] >= 0)
+        {
+            temp[j++] = arr[i];
+        }
+    }
+
+    // Step 3: Copy back to original array
+    for (i = 0; i < n; i++)
+    {
+        arr[i] = temp[i];
+    }
+
+    // Display result
+    printf("Rearranged array:\n");
+    for (i = 0; i < n; i++)
+    {
+        printf("%d ", arr[i]);
+    }
+
+    return 0;
+}
+
+
+27. Define a structure Complex with real and imaginary parts. Write a C program to add two complex numbers and display the result.
+Description: The program should define a structure to represent a complex number with two members: real part and imaginary part. It must then create functions to perform addition of two complex numbers and to display a complex number in a readable format (e.g., a + bi). The program should take input for two complex numbers, compute their sum using the defined function, and print the result. Pre-requisites: Structures, Functions, Basic Arithmetic Operations, Input/Output
+
+
+#include <stdio.h>
+
+// Define structure
+struct Complex
+{
+    float real;
+    float imag;
+};
+
+// Function to add two complex numbers
+struct Complex add(struct Complex c1, struct Complex c2)
+{
+    struct Complex result;
+    result.real = c1.real + c2.real;
+    result.imag = c1.imag + c2.imag;
+    return result;
+}
+
+// Function to display complex number
+void display(struct Complex c)
+{
+    if (c.imag >= 0)
+        printf("%.2f + %.2fi\n", c.real, c.imag);
+    else
+        printf("%.2f - %.2fi\n", c.real, -c.imag);
+}
+
+int main()
+{
+    struct Complex c1, c2, sum;
+
+    printf("Enter first complex number (real and imaginary): ");
+    scanf("%f %f", &c1.real, &c1.imag);
+
+    printf("Enter second complex number (real and imaginary): ");
+    scanf("%f %f", &c2.real, &c2.imag);
+
+    sum = add(c1, c2);
+
+    printf("Sum = ");
+    display(sum);
+
+    return 0;
+}
