@@ -1,0 +1,757 @@
+AVR - LEARNING
+
+1. Objective: Write a program to toggle an LED connected to PORTD Pin 5 with specific timing intervals for the ON and OFF states.
+Requirements: The LED must be interfaced with PORTD Pin 5. Upon system start or reset, the LED must immediately turn ON and remain in that state for exactly 3 seconds. After the ON period, the LED must turn OFF for a duration of exactly 5 seconds. The program must be designed to continuously loop this 3-second ON and 5-second OFF sequence.
+
+
+#define F_CPU 16000000UL   // 16 MHz clock
+#include <avr/io.h>
+#include <util/delay.h>
+
+int main(void)
+{
+    // Set PD5 as output
+    DDRD |= (1 << PD5);
+
+    while (1)
+    {
+        // Turn LED ON
+        PORTD |= (1 << PD5);
+        _delay_ms(3000);   // 3 seconds ON
+
+        // Turn LED OFF
+        PORTD &= ~(1 << PD5);
+        _delay_ms(5000);   // 5 seconds OFF
+    }
+}
+
+2. Objective: Write a program to toggle between a Red LED and a Green LED using a momentary push-button switch. Requirements: The system must interface with a Red LED, a Green LED, and a push-button switch. When the switch is pressed, the program must toggle the current active LED state. If the Red LED is currently ON, it must be turned OFF while the Green LED is turned ON. Conversely, if the Green LED is currently ON, it must be turned OFF while the Red LED is turned ON. Each individual press of the switch should trigger exactly one transition between the two LEDs.
+ 
+#define F_CPU 16000000UL
+#include <avr/io.h>
+#include <util/delay.h>
+
+int main(void)
+{
+    // Set LED pins as output
+    DDRD |= (1 << PD5) | (1 << PD6);
+
+    // Set button pin as input
+    DDRD &= ~(1 << PD2);
+
+    // Enable internal pull-up resistor
+    PORTD |= (1 << PD2);
+
+    uint8_t state = 0; // 0 = Red ON, 1 = Green ON
+
+    // Initial condition → Red ON
+    PORTD |= (1 << PD5);
+    PORTD &= ~(1 << PD6);
+
+    while (1)
+    {
+        // Check button press (active LOW)
+        if (!(PIND & (1 << PD2)))
+        {
+            _delay_ms(50); // debounce
+
+            if (!(PIND & (1 << PD2))) // confirm press
+            {
+                // Toggle state
+                state ^= 1;
+
+                if (state == 0)
+                {
+                    // Red ON, Green OFF
+                    PORTD |= (1 << PD5);
+                    PORTD &= ~(1 << PD6);
+                }
+                else
+                {
+                    // Green ON, Red OFF
+                    PORTD |= (1 << PD6);
+                    PORTD &= ~(1 << PD5);
+                }
+
+                // Wait until button release
+                while (!(PIND & (1 << PD2)));
+                _delay_ms(50); // debounce release
+            }
+        }
+    }
+}
+
+
+3. Objective: Write a program to create a train animation where a single active LED appears to move across a series of connected GPIO pins.
+Requirements: The system must control a sequence of at least eight LEDs connected to PORTB. When the program starts, only the first LED should turn ON. After a short delay, the first LED must turn OFF and the second LED must turn ON. This sequential shifting must continue until the last LED in the row is reached. Once the train reaches the end of the line, the pattern should immediately reset to the first LED and repeat the sequence indefinitely to create a continuous moving light effect.
+
+
+#define F_CPU 16000000UL
+#include <avr/io.h>
+#include <util/delay.h>
+
+int main(void)
+{
+    DDRB = 0xFF;   // Set all PORTB pins as output
+
+    uint8_t led = 0x01; // Start with first LED (PB0)
+
+    while (1)
+    {
+        PORTB = led;    // Turn ON only one LED
+        _delay_ms(200); // Speed control
+
+        led <<= 1;      // Shift left
+
+        if (led == 0)   // If exceeded PB7
+        {
+            led = 0x01; // Reset to first LED
+        }
+    }
+}
+
+
+4. Objective: Write a program that uses four LEDs to display a 4-bit binary count triggered by a switch.
+Requirements: Four LEDs must be connected to PORTB (Pins 0 through 3) and a push-button must be connected to PORTD Pin 2. Every time the switch is pressed, the value displayed by the LEDs must increment by one in binary format (from 0000 to 1111). When the count reaches 15 (all LEDs ON), the next press must reset the counter back to 0. The program should use a dedicated function to update the LED states based on the current counter variable. Module 3: Timers
+
+
+#define F_CPU 16000000UL
+#include <avr/io.h>
+#include <util/delay.h>
+
+// Function to display count on LEDs
+void display(unsigned char count)
+{
+    PORTB = count & 0x0F;   // Show only lower 4 bits (PB0–PB3)
+}
+
+int main()
+{
+    DDRB = 0x0F;   // PB0–PB3 as output (4 LEDs)
+    DDRD &= ~(1 << PD2);  // PD2 as input (button)
+
+    PORTD |= (1 << PD2);  // Enable pull-up resistor
+
+    unsigned char count = 0;
+
+    display(count);   // Initial display = 0000
+
+    while(1)
+    {
+        // Check button press (active LOW)
+        if(!(PIND & (1 << PD2)))
+        {
+            _delay_ms(50);   // Debounce
+
+            if(!(PIND & (1 << PD2)))  // Confirm press
+            {
+                count++;   // Increment
+
+                if(count > 15)   // If exceeds 1111
+                {
+                    count = 0;   // Reset
+                }
+
+                display(count);  // Update LEDs
+
+                // Wait until button release
+                while(!(PIND & (1 << PD2)));
+
+                _delay_ms(50);   // Debounce release
+            }
+        }
+    }
+}
+
+5. Objective: Write a program to simulate a basic one-way traffic light controller using three LEDs to represent the Green, Orange, and Red signals without using inbuilt _delay() function.
+Requirements: The system must control three LEDs connected to any three available GPIO pins on PORTB. Upon system start, the Green LED must turn ON for a duration of 10 seconds. After this period, the Green LED must turn OFF and the Orange LED must turn ON for 3 seconds. Once the Orange duration ends, it must turn OFF and the Red LED must turn ON for 10 seconds. The program must be designed to continuously cycle through this Green-Orange-Red sequence indefinitely.
+
+#define F_CPU 16000000UL
+#include <avr/io.h>
+
+// Function to create 1 second delay using Timer1
+void delay_1s()
+{
+    TCCR1B |= (1 << WGM12);  // CTC mode
+    OCR1A = 15624;           // 1 sec (16MHz, prescaler 1024)
+
+    TCCR1B |= (1 << CS12) | (1 << CS10); // Start timer
+
+    while(!(TIFR1 & (1 << OCF1A))); // Wait till flag set
+
+    TIFR1 |= (1 << OCF1A);  // Clear flag
+    TCCR1B = 0;             // Stop timer
+}
+
+int main()
+{
+    DDRB = 0x07;   // PB0, PB1, PB2 as output
+
+    while(1)
+    {
+        // GREEN ON (10 sec)
+        PORTB = (1 << PB0);
+        for(int i = 0; i < 10; i++)
+        {
+            delay_1s();
+        }
+
+        // ORANGE ON (3 sec)
+        PORTB = (1 << PB1);
+        for(int i = 0; i < 3; i++)
+        {
+            delay_1s();
+        }
+
+        // RED ON (10 sec)
+        PORTB = (1 << PB2);
+        for(int i = 0; i < 10; i++)
+        {
+            delay_1s();
+        }
+    }
+}
+
+
+6. Objective: Write a program to manage a traffic light sequence that includes a high-priority interrupt designed to trigger a state change only after the current light cycle completes its minimum safe duration.
+Requirements: The system must control three LEDs (Green, Orange, and Red) connected to PORTB. Under normal operation, the program should cycle through the Green (10s), Orange (3s), and Red (10s) states in a continuous loop. An emergency push-button must be interfaced with the External Interrupt 0 (INT0) pin. When the button is pressed, the program should set a flag within the Interrupt Service Routine (ISR) rather than jumping states immediately. The main program logic must check this flag at the end of the current light's duration. If the flag is set, the system must then prioritize the Green light for a set duration before clearing the flag and resuming the normal cycle.
+
+-
+
+
+7. Objective: Write a program that manages two independent timing tasks simultaneously using the 16-bit Timer1 and the 8-bit Timer2.
+Requirements: The system must control two different LEDs. Timer1 must be configured to toggle a Status LED on PORTB Pin 1 exactly every 2 seconds. Simultaneously, Timer2 must be configured to toggle a Heartbeat LED on PORTB Pin 2 every 500 milliseconds. The program must use the Compare Match interrupt for both timers to ensure high precision. Each LED's timing logic must reside in its respective Interrupt Service Routine, allowing both sequences to run independently without interfering with each other.
+
+
+#define F_CPU 16000000UL
+#include <avr/io.h>
+#include <avr/interrupt.h>
+
+// Counters for timing
+volatile unsigned int t1_count = 0;
+volatile unsigned int t2_count = 0;
+
+// Timer1 Compare Match ISR (for 2 sec)
+ISR(TIMER1_COMPA_vect)
+{
+    t1_count++;
+
+    if(t1_count >= 2)   // 2 × 1 sec = 2 sec
+    {
+        PORTB ^= (1 << PB1); // Toggle LED
+        t1_count = 0;
+    }
+}
+
+// Timer2 Compare Match ISR (for 500 ms)
+ISR(TIMER2_COMPA_vect)
+{
+    t2_count++;
+
+    if(t2_count >= 50)   // 50 × 10 ms = 500 ms
+    {
+        PORTB ^= (1 << PB2); // Toggle LED
+        t2_count = 0;
+    }
+}
+
+int main()
+{
+    DDRB |= (1 << PB1) | (1 << PB2); 
+    TCCR1B |= (1 << WGM12);   // CTC mode
+    OCR1A = 15624;            // 1 sec (16MHz, 1024 prescaler)
+    TIMSK1 |= (1 << OCIE1A);  // Enable interrupt
+    TCCR1B |= (1 << CS12) | (1 << CS10); // Start timer
+
+
+    TCCR2A |= (1 << WGM21);   // CTC mode
+    OCR2A = 155;              // ~10 ms (16MHz, 1024 prescaler)
+    TIMSK2 |= (1 << OCIE2A);  // Enable interrupt
+    TCCR2B |= (1 << CS22) | (1 << CS21) | (1 << CS20); // Start timer
+
+    sei(); // Enable global interrupts
+
+    while(1)
+    {
+        
+    }
+}
+
+
+
+8. Objective: Write a program to control the brightness of an LED or the speed of a small DC motor using the hardware PWM capability of Timer0.
+Requirements: The program must initialize Timer0 in Fast PWM mode with the output directed to the OC0A pin (PORTD Pin 6). The system should start with a 25% duty cycle. A push-button connected to an input pin should be used to cycle the duty cycle through four levels: 25%, 50%, 75%, and 100% OFF. Each time the button is pressed, the program should update the Output Compare Register (OCR0A) to the next level. The transition between speeds must be handled by a dedicated function that updates the timer registers.
+
+
+#define F_CPU 16000000UL
+#include <avr/io.h>
+#include <util/delay.h>
+
+// Function to update duty cycle
+void set_duty(unsigned char level)
+{
+    switch(level)
+    {
+        case 0: OCR0A = 64;  break;   // ~25%
+        case 1: OCR0A = 128; break;   // ~50%
+        case 2: OCR0A = 192; break;   // ~75%
+        case 3: OCR0A = 0;   break;   // OFF (0%)
+    }
+}
+
+int main()
+{
+    // Set PD6 as output (OC0A)
+    DDRD |= (1 << PD6);
+
+    // Button input
+    DDRD &= ~(1 << PD2);
+    PORTD |= (1 << PD2);  // Pull-up
+
+    // -------- Timer0 Fast PWM Setup --------
+    TCCR0A |= (1 << WGM00) | (1 << WGM01); // Fast PWM
+    TCCR0A |= (1 << COM0A1);               // Non-inverting mode
+    TCCR0B |= (1 << CS01) | (1 << CS00);   // Prescaler 64
+
+    unsigned char level = 0;
+
+    set_duty(level); // Start with 25%
+
+    while(1)
+    {
+        // Button press check
+        if(!(PIND & (1 << PD2)))
+        {
+            _delay_ms(50); // debounce
+
+            if(!(PIND & (1 << PD2)))
+            {
+                level++;   // Next level
+
+                if(level > 3)
+                    level = 0;
+
+                set_duty(level); // Update PWM
+
+                // Wait for release
+                while(!(PIND & (1 << PD2)));
+                _delay_ms(50);
+            }
+        }
+    }
+}
+
+
+9. Objective: Write a program to control the brightness of an LED or the speed of a small DC motor using the hardware PWM capability of Timer0.
+
+Requirements: The program must initialize Timer0 in Fast PWM mode with the output directed to the OC0A pin (PORTD Pin 6). The system should start with a 25% duty cycle. A push-button connected to an input pin should be used to cycle the duty cycle through four levels: 25%, 50%, 75%, and 100% OFF. Each time the button is pressed, the program should update the Output Compare Register (OCR0A) to the appropriate value corresponding to the selected duty cycle. The duty cycle sequence should repeat continuously in a loop (i.e., after 100%, it should return to 25%). The button input should be properly debounced (either via software delay or logic) to avoid multiple unintended triggers.
+
+        
+
+
+
+
+
+10. Objective: Write a program to create an automated cooling system using an LM35 sensor and a DC motor with manual power control.
+Requirements: The system must interface with an LM35 temperature sensor and a DC motor. A push-button must be used to toggle the entire system ON and OFF. When the system is ON, it should read the temperature and adjust the motor speed accordingly. At lower temperatures, the motor should run at a reduced speed, and at higher temperatures, the motor should automatically switch to a higher speed. The program logic for sensor reading, speed calculation, and motor control must be implemented using separate functions.
+
+
+#define F_CPU 16000000UL
+#include <avr/io.h>
+#include <util/delay.h>
+
+// -------- ADC INIT --------
+void ADC_init()
+{
+    ADMUX = (1 << REFS0); // AVcc reference, ADC0
+    ADCSRA = (1 << ADEN) | (1 << ADPS2) | (1 << ADPS1); // Enable ADC
+}
+
+// -------- READ TEMPERATURE --------
+unsigned int read_ADC()
+{
+    ADCSRA |= (1 << ADSC); // Start conversion
+    while (ADCSRA & (1 << ADSC)); // Wait
+    return ADC;
+}
+
+// Convert ADC value to temperature (approx)
+unsigned int get_temperature()
+{
+    unsigned int adc_val = read_ADC();
+    unsigned int temp = adc_val / 2; // approx for LM35
+    return temp;
+}
+
+// -------- MOTOR SPEED CONTROL --------
+void set_speed(unsigned int temp)
+{
+    if(temp < 25)
+        OCR0A = 64;    // low speed
+    else if(temp < 35)
+        OCR0A = 128;   // medium
+    else
+        OCR0A = 200;   // high speed
+}
+
+// -------- PWM INIT --------
+void PWM_init()
+{
+    DDRD |= (1 << PD6); // OC0A output
+
+    TCCR0A |= (1 << WGM00) | (1 << WGM01); // Fast PWM
+    TCCR0A |= (1 << COM0A1);               // Non-inverting
+    TCCR0B |= (1 << CS01) | (1 << CS00);   // Prescaler 64
+}
+
+int main()
+{
+    // Button setup
+    DDRD &= ~(1 << PD2);
+    PORTD |= (1 << PD2); // pull-up
+
+    ADC_init();
+    PWM_init();
+
+    unsigned char system_on = 0;
+
+    while(1)
+    {
+        // Button toggle
+        if(!(PIND & (1 << PD2)))
+        {
+            _delay_ms(50);
+
+            if(!(PIND & (1 << PD2)))
+            {
+                system_on ^= 1; // toggle ON/OFF
+
+                while(!(PIND & (1 << PD2)));
+                _delay_ms(50);
+            }
+        }
+
+        if(system_on)
+        {
+            unsigned int temp = get_temperature();
+            set_speed(temp);
+        }
+        else
+        {
+            OCR0A = 0; // motor OFF
+        }
+    }
+}
+
+11. Write a program to control the angular position of a servo motor based on the analog input received from a potentiometer.
+Requirements: The system must interface a potentiometer with ADC Channel 0 and a servo motor with the OC1A pin (PORTB Pin 1). The program must configure Timer1 in 16-bit Phase Correct PWM mode to generate the 50Hz signal required for servo operation. A dedicated function should read the 10-bit analog value from the potentiometer and map it to the corresponding pulse width required to move the servo from 0 to 180 degrees. The motor position must update in real-time as the potentiometer is turned.
+
+
+
+
+
+
+
+
+12. Objective: Write a program to show a 9-digit number on an LCD screen that increases with a quick button press and resets to zero with a long press.
+Requirements: The system must use a 16x2 LCD and one push-button. On the screen, the counter should start at 000000000. When you press and let go of the button quickly, the count should go up by 1. If you hold the button down for 2 seconds or more, the counter must clear and go back to 0. The program needs to use functions to check how long the button is held and to update the number on the LCD screen.
+
+#define F_CPU 16000000UL
+#include <avr/io.h>
+#include <util/delay.h>
+#include <stdlib.h>
+
+// -------- LCD FUNCTIONS (4-bit basic) --------
+void lcd_cmd(char cmd)
+{
+    PORTB = (cmd & 0xF0);
+    PORTB &= ~(1<<PB0); // RS = 0
+    PORTB |= (1<<PB1);  // EN = 1
+    _delay_ms(2);
+    PORTB &= ~(1<<PB1);
+
+    PORTB = (cmd << 4);
+    PORTB &= ~(1<<PB0);
+    PORTB |= (1<<PB1);
+    _delay_ms(2);
+    PORTB &= ~(1<<PB1);
+}
+
+void lcd_data(char data)
+{
+    PORTB = (data & 0xF0);
+    PORTB |= (1<<PB0); // RS = 1
+    PORTB |= (1<<PB1);
+    _delay_ms(2);
+    PORTB &= ~(1<<PB1);
+
+    PORTB = (data << 4);
+    PORTB |= (1<<PB0);
+    PORTB |= (1<<PB1);
+    _delay_ms(2);
+    PORTB &= ~(1<<PB1);
+}
+
+void lcd_init()
+{
+    DDRB = 0xFF;
+    _delay_ms(20);
+
+    lcd_cmd(0x28); // 4-bit, 2 line
+    lcd_cmd(0x0C); // display ON
+    lcd_cmd(0x06); // increment
+    lcd_cmd(0x01); // clear
+}
+
+// -------- DISPLAY FUNCTION --------
+void display_number(unsigned long num)
+{
+    char buffer[10];
+    lcd_cmd(0x80); // first line
+
+    sprintf(buffer, "%09lu", num); // 9-digit format
+
+    for(int i = 0; i < 9; i++)
+    {
+        lcd_data(buffer[i]);
+    }
+}
+
+// -------- CHECK PRESS TYPE --------
+unsigned char check_button()
+{
+    unsigned int time = 0;
+
+    if(!(PIND & (1 << PD2))) // pressed
+    {
+        _delay_ms(20);
+
+        while(!(PIND & (1 << PD2)))
+        {
+            _delay_ms(10);
+            time += 10;
+
+            if(time >= 2000)
+                return 2; // long press
+        }
+
+        return 1; // short press
+    }
+
+    return 0;
+}
+
+int main()
+{
+    // Button setup
+    DDRD &= ~(1 << PD2);
+    PORTD |= (1 << PD2);
+
+    lcd_init();
+
+    unsigned long count = 0;
+
+    display_number(count);
+
+    while(1)
+    {
+        unsigned char press = check_button();
+
+        if(press == 1) // short press
+        {
+            count++;
+            if(count > 999999999)
+                count = 0;
+
+            display_number(count);
+        }
+        else if(press == 2) // long press
+        {
+            count = 0;
+            display_number(count);
+        }
+    }
+}
+
+
+13. Objective: Write a program to manage an LED’s state and intensity through a serial terminal while providing real-time status updates back to the user.
+Requirements: The system must use UART communication at a 9600 baud rate to receive instructions. An LED must be connected to a pin capable of hardware PWM. If the user sends the command ON, the LED must turn on and the system should send back the message LED is now ON. If the user sends OFF, the LED must turn off and the system should reply with LED is now OFF. If the user sends a number between 0 and 100, the program must adjust the LED brightness to that percentage and reply with Brightness set to [Value]%. Student Instruction: You are responsible for selecting the most appropriate Timer (Timer0, Timer1, or Timer2) and the best PWM mode (Fast PWM or Phase Correct PWM) based on the hardware pins available and the precision required for smooth brightness control. The program must be structured using modular functions for UART communication and PWM updates.
+
+
+#define F_CPU 16000000UL
+#include <avr/io.h>
+#include <string.h>
+#include <stdlib.h>
+
+// -------- UART INIT --------
+void UART_init()
+{
+    UBRR0H = 0;
+    UBRR0L = 103; // 9600 baud for 16MHz
+
+    UCSR0B = (1 << RXEN0) | (1 << TXEN0); // Enable RX, TX
+    UCSR0C = (1 << UCSZ01) | (1 << UCSZ00); // 8-bit data
+}
+
+// -------- UART SEND --------
+void UART_send_char(char data)
+{
+    while (!(UCSR0A & (1 << UDRE0)));
+    UDR0 = data;
+}
+
+void UART_send_string(char *str)
+{
+    while (*str)
+    {
+        UART_send_char(*str++);
+    }
+}
+
+// -------- UART RECEIVE --------
+void UART_receive_string(char *buffer)
+{
+    char c;
+    int i = 0;
+
+    while (1)
+    {
+        while (!(UCSR0A & (1 << RXC0)));
+        c = UDR0;
+
+        if (c == '\n' || c == '\r')
+        {
+            buffer[i] = '\0';
+            return;
+        }
+
+        buffer[i++] = c;
+    }
+}
+
+// -------- PWM INIT --------
+void PWM_init()
+{
+    DDRD |= (1 << PD6); // OC0A output
+
+    TCCR0A |= (1 << WGM00) | (1 << WGM01); // Fast PWM
+    TCCR0A |= (1 << COM0A1);               // Non-inverting
+    TCCR0B |= (1 << CS01) | (1 << CS00);   // Prescaler 64
+}
+
+// -------- SET BRIGHTNESS --------
+void set_brightness(int percent)
+{
+    if (percent < 0) percent = 0;
+    if (percent > 100) percent = 100;
+
+    OCR0A = (percent * 255) / 100;
+}
+
+int main()
+{
+    char buffer[20];
+    int value;
+
+    UART_init();
+    PWM_init();
+
+    UART_send_string("System Ready\r\n");
+
+    while (1)
+    {
+        UART_receive_string(buffer);
+
+        if (strcmp(buffer, "ON") == 0)
+        {
+            set_brightness(100);
+            UART_send_string("LED is now ON\r\n");
+        }
+        else if (strcmp(buffer, "OFF") == 0)
+        {
+            set_brightness(0);
+            UART_send_string("LED is now OFF\r\n");
+        }
+        else
+        {
+            value = atoi(buffer);
+
+            if (value >= 0 && value <= 100)
+            {
+                set_brightness(value);
+
+                UART_send_string("Brightness set to ");
+                
+                char temp[5];
+                itoa(value, temp, 10);
+                UART_send_string(temp);
+                UART_send_string("%\r\n");
+            }
+            else
+            {
+                UART_send_string("Invalid command\r\n");
+            }
+        }
+    }
+}
+
+
+14. Objective: Write a program to regulate the rotational speed of a DC motor by mapping an analog input signal to a Pulse Width Modulation (PWM) output.
+Requirements: The system must interface a potentiometer with ADC Channel 0 and a DC motor via a motor driver connected to the OC0A pin (PORTD Pin 6). The program must configure Timer0 in Fast PWM mode to drive the motor. A dedicated function should be used to read the 10-bit analog value from the potentiometer and scale it to an 8-bit value suitable for the Output Compare Register (OCR0A). The motor speed must respond linearly to the potentiometer position, reaching maximum speed at the highest voltage input and stopping at the lowest.
+
+
+#define F_CPU 16000000UL
+#include <avr/io.h>
+
+// -------- ADC INIT --------
+void ADC_init()
+{
+    ADMUX = (1 << REFS0); // AVcc reference, ADC0
+    ADCSRA = (1 << ADEN)  // Enable ADC
+           | (1 << ADPS2) | (1 << ADPS1); // Prescaler 64
+}
+
+// -------- READ ADC --------
+unsigned int read_ADC()
+{
+    ADCSRA |= (1 << ADSC); // Start conversion
+    while (ADCSRA & (1 << ADSC)); // Wait
+    return ADC; // 10-bit value (0–1023)
+}
+
+// -------- PWM INIT --------
+void PWM_init()
+{
+    DDRD |= (1 << PD6); // OC0A output
+
+    TCCR0A |= (1 << WGM00) | (1 << WGM01); // Fast PWM
+    TCCR0A |= (1 << COM0A1);               // Non-inverting
+    TCCR0B |= (1 << CS01) | (1 << CS00);   // Prescaler 64
+}
+
+// -------- SCALE ADC TO PWM --------
+unsigned char scale_to_pwm(unsigned int adc_val)
+{
+    return (adc_val * 255) / 1023; // Convert 10-bit → 8-bit
+}
+
+int main()
+{
+    ADC_init();
+    PWM_init();
+
+    while(1)
+    {
+        unsigned int adc_val = read_ADC();       // Read potentiometer
+        unsigned char pwm_val = scale_to_pwm(adc_val); // Scale
+
+        OCR0A = pwm_val; // Control motor speed
+    }
+}
+
+
+
+15. Objective: Write a program to read temperature data and pressure from a BMP280 sensor and display the real-time value on an OLED screen.
+Requirements: The system must use the I2C protocol to communicate with both the BMP280 sensor and a 128x64 OLED display. The program should first initialize both devices on the I2C bus. It must then read the raw temperature data from the BMP280, convert it into Celsius, and format the result as a string. Finally, the program must clear the OLED screen and display the current temperature in a readable format. The sensor reading and display updating should happen every 2 seconds.
+
+
