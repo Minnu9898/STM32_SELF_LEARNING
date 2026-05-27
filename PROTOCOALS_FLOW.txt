@@ -1,0 +1,697 @@
+GPIO
+
+
+
+START
+  ↓
+Look into board manual / schematic
+  ↓
+Check which PORT and PIN LED is connected to
+  ↓
+Example:
+LED → PA5
+BUTTON → PC13
+  ↓
+Open Reference Manual
+  ↓
+Look into RCC chapter
+  ↓
+Check which BUS GPIOA and GPIOC are connected to
+  ↓
+GPIOA → AHB1 BUS
+GPIOC → AHB1 BUS
+  ↓
+Look into RCC_AHB1ENR register
+  ↓
+Check which bit enables GPIOA clock
+  ↓
+Bit0 → GPIOA clock enable
+Bit2 → GPIOC clock enable
+  ↓
+Set bit0 in RCC_AHB1ENR register
+  ↓
+GPIOA clock enabled
+  ↓
+Set bit2 in RCC_AHB1ENR register
+  ↓
+GPIOC clock enabled
+  ↓
+Open GPIO chapter in Reference Manual
+  ↓
+Look into MODER register
+  ↓
+Check how many bits control one pin
+  ↓
+Each pin uses 2 bits
+  ↓
+For PA5:
+Use MODER bits 10 and 11
+(2 × pin number)
+  ↓
+Look into MODER table
+  ↓
+00 → Input
+01 → Output
+10 → Alternate function
+11 → Analog
+  ↓
+Clear MODER bits 10 and 11
+  ↓
+Write 01 into bits 10 and 11
+  ↓
+PA5 configured as OUTPUT
+  ↓
+For PC13:
+Use MODER bits 26 and 27
+  ↓
+Clear bits 26 and 27
+  ↓
+Write 00 into bits 26 and 27
+  ↓
+PC13 configured as INPUT
+  ↓
+Look into IDR register
+(IDR = Input Data Register)
+  ↓
+Check bit13 of IDR register
+  ↓
+Read button state from PC13
+  ↓
+Button pressed?
+  ↓ YES
+Look into ODR register
+(ODR = Output Data Register)
+  ↓
+Set bit5 in ODR register
+  ↓
+LED ON
+  ↓
+Delay
+  ↓
+Clear bit5 in ODR register
+  ↓
+LED OFF
+  ↓
+Delay
+  ↓
+Go back and read button again
+  ↓
+Repeat forever
+
+
+
+
+
+
+UART
+
+
+```text id="sbplgk"
+START
+  ↓
+Decide which UART peripheral to use
+  ↓
+Example:
+USART2
+  ↓
+Open board schematic / datasheet
+  ↓
+Check which GPIO pins are connected to USART2
+  ↓
+Example:
+PA2 → USART2_TX
+PA3 → USART2_RX
+  ↓
+Open Reference Manual
+  ↓
+Look into RCC chapter
+  ↓
+Check which BUS USART2 is connected to
+  ↓
+USART2 → APB1 BUS
+GPIOA  → AHB1 BUS
+  ↓
+Look into RCC_AHB1ENR register
+  ↓
+Enable GPIOA clock
+  ↓
+Set bit0 in RCC_AHB1ENR
+  ↓
+GPIOA clock enabled
+  ↓
+Look into RCC_APB1ENR register
+  ↓
+Check which bit enables USART2 clock
+  ↓
+USART2 → bit17
+  ↓
+Set bit17 in RCC_APB1ENR
+  ↓
+USART2 clock enabled
+  ↓
+Open GPIO chapter
+  ↓
+Look into MODER register
+  ↓
+USART pins must work in Alternate Function mode
+  ↓
+Look into MODER table
+  ↓
+10 → Alternate Function mode
+  ↓
+For PA2:
+Use MODER bits 4 and 5
+(2 × pin number)
+  ↓
+Clear bits 4 and 5
+  ↓
+Write 10 into bits 4 and 5
+  ↓
+PA2 configured as Alternate Function
+  ↓
+For PA3:
+Use MODER bits 6 and 7
+  ↓
+Clear bits 6 and 7
+  ↓
+Write 10 into bits 6 and 7
+  ↓
+PA3 configured as Alternate Function
+  ↓
+Look into AFRL register
+(AFRL = Alternate Function Low Register)
+  ↓
+Check Alternate Function number for USART2
+  ↓
+Reference Manual says:
+USART2 → AF7
+  ↓
+For PA2:
+Use AFRL bits 8 to 11
+  ↓
+Write AF7 value
+(0111)
+  ↓
+PA2 connected internally to USART2_TX
+  ↓
+For PA3:
+Use AFRL bits 12 to 15
+  ↓
+Write AF7 value
+(0111)
+  ↓
+PA3 connected internally to USART2_RX
+  ↓
+Open USART chapter
+  ↓
+Look into CR1 register
+(CR1 = Control Register 1)
+  ↓
+Enable transmitter
+  ↓
+Set TE bit in CR1
+  ↓
+Enable receiver
+  ↓
+Set RE bit in CR1
+  ↓
+Look into BRR register
+(BRR = Baud Rate Register)
+  ↓
+Configure baud rate
+  ↓
+Example:
+9600 baud
+  ↓
+Write baud value into BRR register
+  ↓
+Enable USART peripheral
+  ↓
+Set UE bit in CR1
+  ↓
+USART started
+  ↓
+To transmit data:
+Look into SR register
+(SR = Status Register)
+  ↓
+Check TXE bit
+(TXE = Transmit Data Register Empty)
+  ↓
+TXE = 1 ?
+  ↓ YES
+Write data into DR register
+(DR = Data Register)
+  ↓
+UART sends data serially
+  ↓
+To receive data:
+Check RXNE bit in SR register
+(RXNE = Receive Data Register Not Empty)
+  ↓
+RXNE = 1 ?
+  ↓ YES
+Read received data from DR register
+  ↓
+Repeat forever
+```
+
+```
+
+
+
+
+
+
+I2C
+
+
+
+```text id="ck0cz5"
+START
+  ↓
+Decide which I2C peripheral to use
+  ↓
+Example:
+I2C1
+  ↓
+Open board schematic / datasheet
+  ↓
+Check which GPIO pins are connected to I2C1
+  ↓
+Example:
+PB6 → I2C1_SCL
+PB7 → I2C1_SDA
+  ↓
+Open Reference Manual
+  ↓
+Look into RCC chapter
+  ↓
+Check which BUS I2C1 is connected to
+  ↓
+I2C1 → APB1 BUS
+GPIOB → AHB1 BUS
+  ↓
+Look into RCC_AHB1ENR register
+  ↓
+Enable GPIOB clock
+  ↓
+Set bit1 in RCC_AHB1ENR
+  ↓
+GPIOB clock enabled
+  ↓
+Look into RCC_APB1ENR register
+  ↓
+Check which bit enables I2C1 clock
+  ↓
+I2C1 → bit21
+  ↓
+Set bit21 in RCC_APB1ENR
+  ↓
+I2C1 clock enabled
+  ↓
+Open GPIO chapter
+  ↓
+Look into MODER register
+  ↓
+I2C pins must work in Alternate Function mode
+  ↓
+Look into MODER table
+  ↓
+10 → Alternate Function mode
+  ↓
+For PB6:
+Use MODER bits 12 and 13
+(2 × pin number)
+  ↓
+Clear bits 12 and 13
+  ↓
+Write 10 into bits 12 and 13
+  ↓
+PB6 configured as Alternate Function
+  ↓
+For PB7:
+Use MODER bits 14 and 15
+  ↓
+Clear bits 14 and 15
+  ↓
+Write 10 into bits 14 and 15
+  ↓
+PB7 configured as Alternate Function
+  ↓
+Look into OTYPER register
+  ↓
+I2C requires Open-Drain output
+  ↓
+Look into OTYPER table
+  ↓
+0 → Push Pull
+1 → Open Drain
+  ↓
+Set bit6 in OTYPER
+  ↓
+PB6 configured as Open Drain
+  ↓
+Set bit7 in OTYPER
+  ↓
+PB7 configured as Open Drain
+  ↓
+Look into OSPEEDR register
+  ↓
+Configure high speed for I2C pins
+  ↓
+Set speed bits for PB6 and PB7
+  ↓
+Look into PUPDR register
+  ↓
+Enable Pull-Up resistors
+  ↓
+Write 01 for PB6
+  ↓
+Write 01 for PB7
+  ↓
+Open AFRL register
+(AFRL = Alternate Function Low Register)
+  ↓
+Check Alternate Function number for I2C1
+  ↓
+Reference Manual says:
+I2C1 → AF4
+  ↓
+For PB6:
+Use AFRL bits 24 to 27
+  ↓
+Write AF4 value
+(0100)
+  ↓
+PB6 internally connected to I2C1_SCL
+  ↓
+For PB7:
+Use AFRL bits 28 to 31
+  ↓
+Write AF4 value
+(0100)
+  ↓
+PB7 internally connected to I2C1_SDA
+  ↓
+Open I2C chapter
+  ↓
+Look into CR2 register
+(CR2 = Control Register 2)
+  ↓
+Configure APB1 clock frequency
+  ↓
+Write peripheral clock frequency value
+  ↓
+Look into CCR register
+(CCR = Clock Control Register)
+  ↓
+Configure I2C clock speed
+  ↓
+Example:
+100KHz standard mode
+  ↓
+Write CCR value
+  ↓
+Look into TRISE register
+  ↓
+Configure maximum rise time
+  ↓
+Write TRISE value
+  ↓
+Enable I2C peripheral
+  ↓
+Set PE bit in CR1 register
+  ↓
+I2C peripheral started
+  ↓
+To send START condition:
+Set START bit in CR1
+  ↓
+Look into SR1 register
+(SR1 = Status Register 1)
+  ↓
+Check SB bit
+(SB = Start Bit)
+  ↓
+SB = 1 ?
+  ↓ YES
+Send slave address into DR register
+  ↓
+Check ADDR bit in SR1
+  ↓
+ADDR = 1 ?
+  ↓ YES
+Clear ADDR by reading SR1 and SR2
+  ↓
+Check TXE bit
+(TXE = Transmit Register Empty)
+  ↓
+TXE = 1 ?
+  ↓ YES
+Write data into DR register
+  ↓
+I2C sends data serially on SDA line
+  ↓
+After all bytes transmitted
+  ↓
+Check BTF bit
+(BTF = Byte Transfer Finished)
+  ↓
+BTF = 1 ?
+  ↓ YES
+Generate STOP condition
+  ↓
+Set STOP bit in CR1
+  ↓
+Communication finished
+  ↓
+Repeat whenever data transfer needed
+```
+
+
+
+
+
+
+SPI
+
+
+
+
+
+```text id="l4wb5w"
+START
+  ↓
+Decide which SPI peripheral to use
+  ↓
+Example:
+SPI1
+  ↓
+Open board schematic / datasheet
+  ↓
+Check which GPIO pins are connected to SPI1
+  ↓
+Example:
+PA5 → SPI1_SCK
+PA6 → SPI1_MISO
+PA7 → SPI1_MOSI
+PA4 → SPI1_NSS
+  ↓
+Open Reference Manual
+  ↓
+Look into RCC chapter
+  ↓
+Check which BUS SPI1 is connected to
+  ↓
+SPI1 → APB2 BUS
+GPIOA → AHB1 BUS
+  ↓
+Look into RCC_AHB1ENR register
+  ↓
+Enable GPIOA clock
+  ↓
+Set bit0 in RCC_AHB1ENR
+  ↓
+GPIOA clock enabled
+  ↓
+Look into RCC_APB2ENR register
+  ↓
+Check which bit enables SPI1 clock
+  ↓
+SPI1 → bit12
+  ↓
+Set bit12 in RCC_APB2ENR
+  ↓
+SPI1 clock enabled
+  ↓
+Open GPIO chapter
+  ↓
+Look into MODER register
+  ↓
+SPI pins must work in Alternate Function mode
+  ↓
+Look into MODER table
+  ↓
+10 → Alternate Function mode
+  ↓
+For PA5:
+Use MODER bits 10 and 11
+  ↓
+Clear bits 10 and 11
+  ↓
+Write 10 into bits 10 and 11
+  ↓
+PA5 configured as Alternate Function
+  ↓
+For PA6:
+Use MODER bits 12 and 13
+  ↓
+Clear bits 12 and 13
+  ↓
+Write 10 into bits 12 and 13
+  ↓
+PA6 configured as Alternate Function
+  ↓
+For PA7:
+Use MODER bits 14 and 15
+  ↓
+Clear bits 14 and 15
+  ↓
+Write 10 into bits 14 and 15
+  ↓
+PA7 configured as Alternate Function
+  ↓
+For PA4:
+Use MODER bits 8 and 9
+  ↓
+Clear bits 8 and 9
+  ↓
+Write 10 into bits 8 and 9
+  ↓
+PA4 configured as Alternate Function
+  ↓
+Open AFRL register
+(AFRL = Alternate Function Low Register)
+  ↓
+Check Alternate Function number for SPI1
+  ↓
+Reference Manual says:
+SPI1 → AF5
+  ↓
+For PA5:
+Use AFRL bits 20 to 23
+  ↓
+Write AF5 value
+(0101)
+  ↓
+PA5 internally connected to SPI1_SCK
+  ↓
+For PA6:
+Use AFRL bits 24 to 27
+  ↓
+Write AF5 value
+(0101)
+  ↓
+PA6 internally connected to SPI1_MISO
+  ↓
+For PA7:
+Use AFRL bits 28 to 31
+  ↓
+Write AF5 value
+(0101)
+  ↓
+PA7 internally connected to SPI1_MOSI
+  ↓
+For PA4:
+Use AFRL bits 16 to 19
+  ↓
+Write AF5 value
+(0101)
+  ↓
+PA4 internally connected to SPI1_NSS
+  ↓
+Open SPI chapter
+  ↓
+Look into CR1 register
+(CR1 = Control Register 1)
+  ↓
+Configure device mode
+  ↓
+MSTR bit:
+1 → Master
+0 → Slave
+  ↓
+Set MSTR bit
+  ↓
+STM32 configured as SPI Master
+  ↓
+Configure baud rate
+  ↓
+Look into BR bits in CR1
+  ↓
+Select SPI clock speed
+  ↓
+Configure clock polarity
+  ↓
+CPOL bit:
+0 → Clock idle LOW
+1 → Clock idle HIGH
+  ↓
+Configure clock phase
+  ↓
+CPHA bit:
+0 → Sample first edge
+1 → Sample second edge
+  ↓
+Configure data frame format
+  ↓
+DFF bit:
+0 → 8-bit data
+1 → 16-bit data
+  ↓
+Enable software slave management if needed
+  ↓
+Set SSM bit
+  ↓
+Set SSI bit
+  ↓
+Enable SPI peripheral
+  ↓
+Set SPE bit in CR1
+  ↓
+SPI started
+  ↓
+To transmit data:
+Look into SR register
+(SR = Status Register)
+  ↓
+Check TXE bit
+(TXE = Transmit Buffer Empty)
+  ↓
+TXE = 1 ?
+  ↓ YES
+Write data into DR register
+(DR = Data Register)
+  ↓
+SPI shifts data through MOSI line
+  ↓
+Simultaneously receives data through MISO line
+  ↓
+Check RXNE bit
+(RXNE = Receive Buffer Not Empty)
+  ↓
+RXNE = 1 ?
+  ↓ YES
+Read received data from DR register
+  ↓
+Check BSY bit
+(BSY = SPI Busy Flag)
+  ↓
+BSY = 0 ?
+  ↓ YES
+SPI transfer completed
+  ↓
+Repeat whenever communication needed
+```
+
