@@ -1,0 +1,9 @@
+Video Link 
+
+
+https://www.youtube.com/shorts/JRDbOrqSsIo?si=md8ywYcNeQNLR80y
+
+
+0:00 – 0:05: Project source code 
+0:05 – 0:12: NUCLEO-F446RE board running the application; onboard LED (PA5) blinks periodically using the GPIO driver.
+0:12 – 0:20: UART terminal output displayed on the PC, showing the message "LED Blinking" transmitted through the USART driver whenever the LED toggles.
