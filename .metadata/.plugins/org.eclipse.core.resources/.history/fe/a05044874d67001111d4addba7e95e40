@@ -1,0 +1,26 @@
+
+
+#include "stm32f446xx.h"
+#include "stm32f446xx_gpio_driver.h"
+#include "stm32f446xx_i2c_driver.h"
+#include "lm75.h"
+
+I2C_Handle_t I2C1Handle;
+
+int main(void)
+{
+    float temperature;
+
+    I2C1_GPIOInits();
+    I2C1_Inits();
+
+    while(1)
+    {
+        temperature = LM75_ReadTemperature();
+
+        // Put breakpoint here
+        // Watch variable temperature
+
+        for(uint32_t i=0;i<500000;i++);
+    }
+}

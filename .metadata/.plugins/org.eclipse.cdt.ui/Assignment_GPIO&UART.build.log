@@ -1,0 +1,9 @@
+23:24:02 **** Incremental Build of configuration Debug for project Assignment_GPIO&UART ****
+make -j16 all 
+arm-none-eabi-size  Assignment_GPIO&UART.elf 
+c:/st/stm32cubeide_1.18.1/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.make.win32_2.2.0.202409170845/tools/bin/sh: UART.elf: not found
+make: *** [makefile:68: default.size.stdout] Error 127
+"make -j16 all" terminated with exit code 2. Build might be incomplete.
+
+23:24:03 Build Failed. 1 errors, 0 warnings. (took 362ms)
+

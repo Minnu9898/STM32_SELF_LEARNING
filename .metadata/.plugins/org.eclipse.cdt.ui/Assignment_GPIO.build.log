@@ -1,0 +1,29 @@
+22:37:59 **** Build of configuration Debug for project Assignment_GPIO ****
+make -j16 all 
+arm-none-eabi-gcc -mcpu=cortex-m4 -g3 -DDEBUG -c -x assembler-with-cpp -MMD -MP -MF"Startup/startup_stm32f446retx.d" -MT"Startup/startup_stm32f446retx.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Startup/startup_stm32f446retx.o" "../Startup/startup_stm32f446retx.s"
+arm-none-eabi-gcc "../Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F4 -DSTM32F446RETx -DNUCLEO_F446RE -DSTM32F446xx -c -I../Inc -I"D:/MINNU/GITHUB/STM32_SELF_LEARNING/Chip_Headers/CMSIS/Device/ST/STM32F4xx/Include" -I"D:/MINNU/GITHUB/STM32_SELF_LEARNING/Chip_Headers/CMSIS/Include" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Src/main.d" -MT"Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Src/main.o"
+arm-none-eabi-gcc "../Src/stm32f446xx_gpio_driver.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F4 -DSTM32F446RETx -DNUCLEO_F446RE -DSTM32F446xx -c -I../Inc -I"D:/MINNU/GITHUB/STM32_SELF_LEARNING/Chip_Headers/CMSIS/Device/ST/STM32F4xx/Include" -I"D:/MINNU/GITHUB/STM32_SELF_LEARNING/Chip_Headers/CMSIS/Include" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Src/stm32f446xx_gpio_driver.d" -MT"Src/stm32f446xx_gpio_driver.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Src/stm32f446xx_gpio_driver.o"
+arm-none-eabi-gcc "../Src/stm32f446xx_i2c_driver.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F4 -DSTM32F446RETx -DNUCLEO_F446RE -DSTM32F446xx -c -I../Inc -I"D:/MINNU/GITHUB/STM32_SELF_LEARNING/Chip_Headers/CMSIS/Device/ST/STM32F4xx/Include" -I"D:/MINNU/GITHUB/STM32_SELF_LEARNING/Chip_Headers/CMSIS/Include" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Src/stm32f446xx_i2c_driver.d" -MT"Src/stm32f446xx_i2c_driver.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Src/stm32f446xx_i2c_driver.o"
+arm-none-eabi-gcc "../Src/stm32f446xx_rcc_driver.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F4 -DSTM32F446RETx -DNUCLEO_F446RE -DSTM32F446xx -c -I../Inc -I"D:/MINNU/GITHUB/STM32_SELF_LEARNING/Chip_Headers/CMSIS/Device/ST/STM32F4xx/Include" -I"D:/MINNU/GITHUB/STM32_SELF_LEARNING/Chip_Headers/CMSIS/Include" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Src/stm32f446xx_rcc_driver.d" -MT"Src/stm32f446xx_rcc_driver.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Src/stm32f446xx_rcc_driver.o"
+arm-none-eabi-gcc "../Src/stm32f446xx_spi_driver.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F4 -DSTM32F446RETx -DNUCLEO_F446RE -DSTM32F446xx -c -I../Inc -I"D:/MINNU/GITHUB/STM32_SELF_LEARNING/Chip_Headers/CMSIS/Device/ST/STM32F4xx/Include" -I"D:/MINNU/GITHUB/STM32_SELF_LEARNING/Chip_Headers/CMSIS/Include" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Src/stm32f446xx_spi_driver.d" -MT"Src/stm32f446xx_spi_driver.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Src/stm32f446xx_spi_driver.o"
+arm-none-eabi-gcc "../Src/stm32f446xx_usart_driver.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F4 -DSTM32F446RETx -DNUCLEO_F446RE -DSTM32F446xx -c -I../Inc -I"D:/MINNU/GITHUB/STM32_SELF_LEARNING/Chip_Headers/CMSIS/Device/ST/STM32F4xx/Include" -I"D:/MINNU/GITHUB/STM32_SELF_LEARNING/Chip_Headers/CMSIS/Include" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Src/stm32f446xx_usart_driver.d" -MT"Src/stm32f446xx_usart_driver.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Src/stm32f446xx_usart_driver.o"
+arm-none-eabi-gcc "../Src/syscalls.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F4 -DSTM32F446RETx -DNUCLEO_F446RE -DSTM32F446xx -c -I../Inc -I"D:/MINNU/GITHUB/STM32_SELF_LEARNING/Chip_Headers/CMSIS/Device/ST/STM32F4xx/Include" -I"D:/MINNU/GITHUB/STM32_SELF_LEARNING/Chip_Headers/CMSIS/Include" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Src/syscalls.d" -MT"Src/syscalls.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Src/syscalls.o"
+arm-none-eabi-gcc "../Src/sysmem.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F4 -DSTM32F446RETx -DNUCLEO_F446RE -DSTM32F446xx -c -I../Inc -I"D:/MINNU/GITHUB/STM32_SELF_LEARNING/Chip_Headers/CMSIS/Device/ST/STM32F4xx/Include" -I"D:/MINNU/GITHUB/STM32_SELF_LEARNING/Chip_Headers/CMSIS/Include" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Src/sysmem.d" -MT"Src/sysmem.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Src/sysmem.o"
+../Src/stm32f446xx_usart_driver.c: In function 'USART_IRQHandling':
+../Src/stm32f446xx_usart_driver.c:646:33: warning: variable 'temp3' set but not used [-Wunused-but-set-variable]
+  646 |         uint32_t temp1 , temp2, temp3;
+      |                                 ^~~~~
+arm-none-eabi-gcc -o "Assignment_GPIO.elf" @"objects.list"   -mcpu=cortex-m4 -T"D:\MINNU\GITHUB\STM32_SELF_LEARNING\Assignment_GPIO\STM32F446RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Assignment_GPIO.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: Assignment_GPIO.elf
+ 
+arm-none-eabi-size  Assignment_GPIO.elf 
+arm-none-eabi-objdump -h -S Assignment_GPIO.elf  > "Assignment_GPIO.list"
+   text	   data	    bss	    dec	    hex	filename
+   3660	     20	   1604	   5284	   14a4	Assignment_GPIO.elf
+Finished building: default.size.stdout
+ 
+Finished building: Assignment_GPIO.list
+ 
+
+22:38:01 Build Finished. 0 errors, 1 warnings. (took 1s.666ms)
+

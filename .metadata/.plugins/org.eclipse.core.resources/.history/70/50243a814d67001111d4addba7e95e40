@@ -1,0 +1,42 @@
+/*
+ * lm75.c
+ *
+ *  Created on: Jun 13, 2026
+ *      Author: MinnuDiary
+ */
+
+
+#define LM75_ADDR      0x48
+#define TEMP_REG       0x00
+
+float LM75_ReadTemperature(void)
+{
+    uint8_t reg = TEMP_REG;
+    uint8_t temp_data[2];
+
+    // Send register pointer
+    I2C_MasterSendData(
+            &I2C1Handle,
+            &reg,
+            1,
+            LM75_ADDR,
+            I2C_ENABLE_SR);
+
+    // Read 2 bytes
+    I2C_MasterReceiveData(
+            &I2C1Handle,
+            temp_data,
+            2,
+            LM75_ADDR,
+            I2C_DISABLE_SR);
+
+    int16_t raw;
+
+    raw = (temp_data[0] << 8) | temp_data[1];
+
+    raw >>= 7;          // LM75 uses 9-bit temperature data
+
+    float temp = raw * 0.5;
+
+    return temp;
+}
